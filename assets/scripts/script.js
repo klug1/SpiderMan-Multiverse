@@ -20,6 +20,17 @@ function addEventListenersToCards() {
 
 document.addEventListener("DOMContentLoaded", addEventListenersToCards, false);
 
-function selectCarouselItem(selectedItem) { 
-  console.log('Selecionando', selectedItem)
+function selectCarouselItem(selectedButtomElement) { 
+    const selectedItem = selectedButtomElement.id;
+    const carousel = document.querySelector('.s-card-carousel');
+    const transform = carousel.style.transform;
+    const rotateY = transform.match(/rotateY\((-?\d+deg)\)/i);
+    const rotateYDeg = -120 * (Number(selectedItem) - 1);
+    const newTransform = transform.replace(rotateY[0], `rotateY(${rotateYDeg}deg)`);
+
+    carousel.style.transform = newTransform;
+
+    const activeButtonElement = document.querySelector('.s-controller__button--active');
+    activeButtonElement.classList.remove('s-controller__button--active');
+    selectedButtomElement.classList.add('s-controller__button--active');
 }
